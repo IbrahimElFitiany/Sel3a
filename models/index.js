@@ -15,6 +15,7 @@ const StoreAddress = require('./StoreAddress.js')(db);
 const Cart = require('./Cart.js')(db)
 const Order = require('./Order.js')(db)
 const OrderItem = require('./OrderItem.js')(db)
+const WishList = require('./WishList.js')(db)
 
 const allModels = {
     Customer,
@@ -32,6 +33,7 @@ const allModels = {
     StoreAddress,
     Order,
     OrderItem,
+    WishList
 };
 
 module.exports = allModels;

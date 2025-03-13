@@ -17,6 +17,7 @@ const SubCategoryModel = (sequelize) => {
           key: "id",
         },
         onDelete: "CASCADE",
+        field: "catid"
       },
       name: {
         type: DataTypes.STRING(255),

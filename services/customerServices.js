@@ -1,4 +1,5 @@
-const {Customer,CustomerAddress} = require('../models/index');
+const { Op } = require("sequelize");
+const {Customer,CustomerAddress,Category,Product,SubCategory,WishList} = require('../models/index');
 
 
 customerServices = {
@@ -29,8 +30,7 @@ customerServices = {
         }
     },
     deleteAddressService: async(customerid,addresslabel) =>{
-        try {
-            
+        try {     
             const addressExists = await CustomerAddress.findOne({
                 where: {customerid, addresslabel}
             });
@@ -48,9 +48,85 @@ customerServices = {
     },
     searchProducts: async (query, test) => {
     },
-    getCategory: async (categoryName) => {
+    getCategoryService: async (categoryName) => {
+        try {
 
-        
+            const category = await Category.findOne({
+                where: {name: categoryName}
+            });
+
+            if (!category) {
+                return null; 
+            }
+
+            const subCategories = await SubCategory.findAll({where:{catID:category.id}})
+            const subCategoryIds = subCategories.map(sub => sub.id);
+
+            const productsInCat = await Product.findAll({
+                where: {
+                    subcategoryid: {
+                        [Op.in]: subCategoryIds
+                    }
+                }
+            });
+
+            return {
+                products: productsInCat
+            };
+        } 
+        catch (error) {
+            throw new Error("Error while registering customer: " + error.message);
+        }     
+    },
+    addToWishListService: async (customer_id , product_id ) => {
+        try {
+            const productInWishList = await WishList.findOne({
+                where: { customer_id , product_id }
+            });
+
+            if (productInWishList){
+                return null
+            }
+
+            const addProduct = await WishList.create({customer_id,product_id})
+            return addProduct; 
+            }               
+        catch (error) {
+            throw new Error("Error while registering customer: " + error.message);
+        }
+    },
+    getWishListService: async (customer_id) => {
+        try {
+            const wishList = await WishList.findAll({where: {customer_id}});
+
+            if (!wishList){
+                return null
+            }
+
+            return wishList; 
+            }               
+        catch (error) {
+            throw new Error("Error while registering customer: " + error.message);
+        }
+
+    },
+    removeFromWishListService: async (customer_id,product_id) => {
+        try {     
+            const productExists = await WishList.findOne({
+                where: {customer_id, product_id}
+            });
+
+            if (!productExists){
+                return null
+            }
+
+            await productExists.destroy();
+            return true; 
+        } 
+        catch (error) {
+            throw new Error("Error while deleting customer address: " + error.message);
+        }
+
     }
 }
 

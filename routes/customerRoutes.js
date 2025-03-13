@@ -27,6 +27,12 @@ router
 
 router
 .route('/category/:categoryName')
-.get(customerController.getCategory)
+.get(verifyToken,customerController.getCategory)
+
+router
+.route('/wishlist')
+.get (verifyToken, customerController.getWishList)
+.post(verifyToken ,customerController.addToWishList)
+.delete(verifyToken ,customerController.removeFromWishList)
 
 module.exports = router;

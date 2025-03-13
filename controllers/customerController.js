@@ -1,3 +1,4 @@
+const { Product } = require("../models");
 const customerServices = require("../services/customerServices");
 
 customerController = {
@@ -76,8 +77,6 @@ customerController = {
         catch (error) {
             res.status(500).json({ message: error.message });
         }
-
-
     },
     searchProducts: async (req, res) => {
         try {
@@ -90,13 +89,95 @@ customerController = {
         }
    },    
     getCategory: async (req, res) => {
+
+        const user = req.user;
+
+        if (user.role !== "customer") {
+            return res.status(403).json({ error: "You need to be a customer" });
+        }
+
         try {
             const {categoryName} = req.params
-            const result = await customerServices.getCategory(categoryName);
-            res.status(200).json(result);
-        } catch (error) {
-            res.status(500).json({error});
+            const result = await customerServices.getCategoryService(categoryName.toLowerCase().trim());
+            if (!result){
+                return res.status(404).json({message:"no category with this  name"})
+            }
+            return res.status(200).json(result);
+        } 
+        catch (error) {
+            return res.status(500).json({ error: error.message });
         }
+    },
+    addToWishList: async(req,res) => {
+
+        const user = req.user;
+
+        if (user.role !== "customer") {
+            return res.status(403).json({ error: "You need to be a customer" });
+        }
+        try {
+            const{product_id} = req.body
+
+            if (!product_id) {
+                return res.status(400).json({ error: "All fields are required" });
+            }
+
+            const addToWishList = await customerServices.addToWishListService(user.userID, product_id);
+
+            if (!addToWishList){
+                return res.status(409).json({message:"product already exists"})
+            }
+
+            return res.status(200).json(addToWishList);
+        } 
+        catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+    },
+    getWishList: async (req,res) => {
+        const user = req.user;
+
+        if (user.role !== "customer") {
+            return res.status(403).json({ error: "You need to be a customer" });
+        }
+        
+        try {
+            const wishList = await customerServices.getWishListService(user.userID);
+            if (!wishList){
+                return res.status(404).json({error:"no products in wishList"})
+            } 
+            return res.status(200).json(wishList);
+        } 
+        catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+
+    },
+    removeFromWishList: async(req,res) =>{
+
+        const user = req.user;
+    
+        if (user.role !== "customer") {
+            return res.status(403).json({ error: "You need to be a customer" });
+        }
+
+        const {product_id} = req.body;
+        if (!product_id) {
+            return res.status(400).json({ error: "All fields are required" });
+        }
+
+        try {
+            const removeFromWishList = await customerServices.removeFromWishListService(user.userID,product_id);
+
+            if(!removeFromWishList){
+                return res.status(409).json({ error: "product doesn't exist" });
+            }
+            res.status(200).json({removeFromWishList, message:"product deleted :)"});
+        } 
+        catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+
     }
 }
 

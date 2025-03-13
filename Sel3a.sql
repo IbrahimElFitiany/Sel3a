@@ -65,8 +65,9 @@ CREATE TABLE category (
 CREATE TABLE sub_category (
     id SERIAL PRIMARY KEY,
     catID INTEGER NOT NULL REFERENCES category(id) ON DELETE CASCADE,
-    name VARCHAR(255) UNIQUE NOT NULL
+    name VARCHAR(255) UNIQUE NOT NULL,
 );
+
 
 CREATE TABLE brand (
     id SERIAL PRIMARY KEY,
@@ -85,6 +86,15 @@ CREATE TABLE product (
     subCategoryID INTEGER REFERENCES sub_category(id) ON DELETE CASCADE,
    	brand_id INTEGER REFERENCES brand(id) ON DELETE CASCADE,
     rating DECIMAL(2,1) CHECK (rating BETWEEN 0 AND 5) DEFAULT 0  
+);
+
+CREATE TABLE wishlist (
+    id SERIAL PRIMARY KEY,
+    customer_id INT NOT NULL,
+    product_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customer(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE
 );
 
 
