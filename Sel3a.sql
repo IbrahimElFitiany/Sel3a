@@ -116,6 +116,7 @@ CREATE TABLE cart (
     addedDate DATE DEFAULT CURRENT_DATE
 );
 
+drop TABLE cart
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     userID INTEGER REFERENCES Customer(id) ON DELETE CASCADE,

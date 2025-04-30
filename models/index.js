@@ -24,6 +24,10 @@ BranchStock.belongsTo(Product, { foreignKey: 'product_id', as: 'product' });
 BranchStock.belongsTo(StoreAddress, { foreignKey: 'branch_id', as: 'branch' });
 StoreAddress.hasMany(BranchStock, { foreignKey: 'branch_id', as: 'stocks' });
 
+
+Cart.belongsTo(Product, { foreignKey: 'productid' });  // This links Cart to Product
+Product.hasMany(Cart, { foreignKey: 'productid' });  // This links Product to Cart
+
 const allModels = {
     Customer,
     CustomerAddress,

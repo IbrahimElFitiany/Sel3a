@@ -74,7 +74,6 @@ const ProductModel = (sequelize) => {
         tableName: "product",
         timestamps: false,
     });
-
     return Product;
 };
 

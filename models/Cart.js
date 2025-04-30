@@ -9,7 +9,7 @@ const CartModel = (sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      userID: {
+      userid: {
         type: DataTypes.INTEGER,
         references: {
           model: "Customer",
@@ -17,7 +17,7 @@ const CartModel = (sequelize) => {
         },
         onDelete: "CASCADE",
       },
-      productID: {
+      productid: {
         type: DataTypes.INTEGER,
         references: {
           model: "product",
@@ -32,7 +32,7 @@ const CartModel = (sequelize) => {
           min: 1,
         },
       },
-      addedDate: {
+      addeddate: {
         type: DataTypes.DATEONLY,
         defaultValue: DataTypes.NOW,
       },
