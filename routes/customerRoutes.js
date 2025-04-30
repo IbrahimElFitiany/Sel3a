@@ -35,4 +35,6 @@ router
 .post(verifyToken ,customerController.addToWishList)
 .delete(verifyToken ,customerController.removeFromWishList)
 
+
+
 module.exports = router;

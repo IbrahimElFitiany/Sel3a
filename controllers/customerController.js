@@ -80,14 +80,18 @@ customerController = {
     },
     searchProducts: async (req, res) => {
         try {
-            const { q, test } = req.query;
-            console.log(test)
-            const result = await customerServices.searchProducts(q, test);
+            const { q } = req.query;
+    
+            if (!q || q.trim() === '') {
+                return res.status(400).json({ error: 'Missing search query' });
+            }
+    
+            const result = await customerServices.searchProducts(q.trim());
             res.status(200).json(result);
         } catch (error) {
-            res.status(500).json({error});
+            res.status(500).json({ error: error.message || 'Server Error' });
         }
-   },    
+    },
     getCategory: async (req, res) => {
 
         const user = req.user;

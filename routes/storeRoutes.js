@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController')
-const sellerController = require('../controllers/sellerController')
+const storeController = require('../controllers/storeController')
 const {verifyToken} = require('../middleware/authMiddleware')
 
 
 
 router
 .route('/register')
-.post(sellerController.register);
+.post(storeController.register);
 
 router
 .route('/login')
@@ -16,8 +16,11 @@ router
 
 
 router
-.route('/product')
-.post(verifyToken,sellerController.addProduct);
+.route('/branch')
+.post(verifyToken,storeController.addBranch);
+
+
+
 
 
 module.exports = router;

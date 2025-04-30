@@ -16,6 +16,13 @@ const Cart = require('./Cart.js')(db)
 const Order = require('./Order.js')(db)
 const OrderItem = require('./OrderItem.js')(db)
 const WishList = require('./WishList.js')(db)
+const BranchStock = require('./branchStock.js')(db)
+
+Product.hasMany(BranchStock, { foreignKey: 'product_id', as: 'branchStocks' });
+BranchStock.belongsTo(Product, { foreignKey: 'product_id', as: 'product' });
+
+BranchStock.belongsTo(StoreAddress, { foreignKey: 'branch_id', as: 'branch' });
+StoreAddress.hasMany(BranchStock, { foreignKey: 'branch_id', as: 'stocks' });
 
 const allModels = {
     Customer,
@@ -33,7 +40,9 @@ const allModels = {
     StoreAddress,
     Order,
     OrderItem,
-    WishList
+    WishList,
+    BranchStock
 };
+
 
 module.exports = allModels;

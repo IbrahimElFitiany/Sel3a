@@ -35,7 +35,7 @@ authService = {
                             throw new Error("User not found");
                         }
                     }
-                    if (role == "seller"){
+                    if (role == "store"){
                         user = await Store.findOne({ where: { username: identifier } });
 
                         if (!user) {

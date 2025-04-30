@@ -1,7 +1,7 @@
 const { Op } = require("sequelize");
-const {Product,Store} = require('../models/index');
+const {Product,Store , StoreAddress} = require('../models/index');
 
-sellerServices = {
+storeServices = {
     registerService: async (username,password,email,phone,store_name,description) =>{
         try {
             const store = await Store.findOne({ 
@@ -28,23 +28,23 @@ sellerServices = {
         }
 
     },
-    addProductService: async (name,image,description,price,stockQty,subCategoryID,storeID,brand_id) => {
+    addBranch: async (storeid,address,govID,districtID) =>{
         try {
-            const productExists  = await Product.findOne({ where: { name, storeID }});
-
-            if (productExists) {
-                return null;
+            const branch = await StoreAddress.findOne({storeid , address});
+            
+            if (branch) {
+                if (branch.address === address) throw new Error(`this branch already exists.`);
             }
-            console.log(brand_id)
 
-            const newProduct = await Product.create({name,image,description,price,stockQty,subCategoryID,storeID,brand_id}); 
-            return newProduct;
+            const newBranch = await StoreAddress.create({storeid,address,govid:govID,districtid:districtID});
+            return newBranch;  
         } 
         catch (error) {
             throw error;
         }
-    },
+
+    }
 
 }
 
-module.exports = sellerServices;
+module.exports = storeServices;

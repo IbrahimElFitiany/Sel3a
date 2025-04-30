@@ -9,7 +9,7 @@ const StoreAddressModel = (sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      storeID: {
+      storeid: {
         type: DataTypes.INTEGER,
         references: {
           model: "store",
@@ -21,7 +21,7 @@ const StoreAddressModel = (sequelize) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      govID: {
+      govid: {
         type: DataTypes.INTEGER,
         references: {
           model: "govs",
@@ -29,7 +29,7 @@ const StoreAddressModel = (sequelize) => {
         },
         onDelete: "CASCADE",
       },
-      districtID: {
+      districtid: {
         type: DataTypes.INTEGER,
         references: {
           model: "districts",
