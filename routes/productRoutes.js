@@ -4,6 +4,12 @@ const {verifyToken} = require('../middleware/authMiddleware');
 const productController = require('../controllers/productController');
 
 
+router
+.route('/search')
+.get(productController.searchProducts);
+
+router.route('/:productID/get-related')
+.get(productController.getRelatedProducts);
 
 router
 .route('')

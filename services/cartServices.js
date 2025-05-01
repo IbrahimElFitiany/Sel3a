@@ -51,6 +51,23 @@ cartServices = {
         }
 
     },
+    getCartCount: async (customer) => {
+        try {
+            if (customer.role !== "customer") {
+                return res.status(403).json({ error: "You need to be a customer" });
+            }
+            const cartItemsCount = await Cart.count({
+                where: {
+                    userid: customer.userID
+                }
+            });
+            return cartItemsCount;
+            }
+        catch (error) {
+            console.error(error);
+            throw new Error('Error while removing cart item');
+        }
+    },          
     deleteCartItem: async (customer, carItemId) => {
 
         if (customer.role !== "customer") {

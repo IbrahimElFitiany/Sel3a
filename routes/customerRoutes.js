@@ -13,17 +13,13 @@ router
 
 router
 .route('/login')
-.get(authController.login);
+.post(authController.login);
 
 
 router
 .route('/address')
 .post(verifyToken,customerController.addAddress)
 .delete(verifyToken,customerController.deleteAddress)
-
-router
-.route('/search')
-.get(customerController.searchProducts)
 
 router
 .route('/category/:categoryName')

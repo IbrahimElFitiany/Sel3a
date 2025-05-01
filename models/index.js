@@ -18,15 +18,34 @@ const OrderItem = require('./OrderItem.js')(db)
 const WishList = require('./WishList.js')(db)
 const BranchStock = require('./branchStock.js')(db)
 
-Product.hasMany(BranchStock, { foreignKey: 'product_id', as: 'branchStocks' });
+Product.hasMany(BranchStock, { foreignKey: 'product_id'});
 BranchStock.belongsTo(Product, { foreignKey: 'product_id', as: 'product' });
 
-BranchStock.belongsTo(StoreAddress, { foreignKey: 'branch_id', as: 'branch' });
-StoreAddress.hasMany(BranchStock, { foreignKey: 'branch_id', as: 'stocks' });
+BranchStock.belongsTo(StoreAddress, { foreignKey: 'branch_id'});
+StoreAddress.hasMany(BranchStock, { foreignKey: 'branch_id'});
 
 
-Cart.belongsTo(Product, { foreignKey: 'productid' });  // This links Cart to Product
-Product.hasMany(Cart, { foreignKey: 'productid' });  // This links Product to Cart
+Cart.belongsTo(Product, { foreignKey: 'productid' });
+Product.hasMany(Cart, { foreignKey: 'productid' });
+
+
+
+Product.belongsTo(SubCategory, { foreignKey: 'subcategoryid'});
+SubCategory.hasMany(Product, { foreignKey: 'subcategoryid'});
+
+SubCategory.belongsTo(Category, { foreignKey: 'catid'});
+Category.hasMany(SubCategory, { foreignKey: 'catid'});
+
+Product.belongsTo(Brand, { foreignKey: 'brand_id'});
+Brand.hasMany(Product, { foreignKey: 'brand_id'});
+
+
+StoreAddress.belongsTo(Gov, { foreignKey: 'govid' })
+StoreAddress.belongsTo(District, { foreignKey: 'districtid' })
+
+Store.hasMany(Product, { foreignKey: 'storeid' });
+Product.belongsTo(Store, { foreignKey: 'storeid' });
+
 
 const allModels = {
     Customer,

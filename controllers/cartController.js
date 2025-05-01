@@ -36,6 +36,16 @@ cartController = {
             res.status(500).json({ message: error.message });
         }
     },
+    getCartCount: async (req, res) => {
+        const customer = req.user;
+
+        try {
+            const cartItemsCount = await cartServices.getCartCount(customer);
+            res.status(200).json({ cartItemsCount });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
     deleteCartItem: async (req, res) => {
         const customer  = req.user;
         const { carItemId } = req.params;

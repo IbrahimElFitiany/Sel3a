@@ -14,7 +14,9 @@ router
 .route('/:carItemId')
 .delete(verifyToken,cartController.deleteCartItem);
 
-
+router
+.route('/count')
+.get(verifyToken,cartController.getCartCount);
 
 
 

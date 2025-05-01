@@ -8,8 +8,8 @@ const authController = {
         const reqRole = req.originalUrl.split("/")[2]    
         console.log(reqRole)    
         try {
-            const {token} = await authService.Login(identifier, password ,reqRole);
-            return res.status(200).json({ message: "Login successful", token});
+            const {token , fname} = await authService.Login(identifier, password ,reqRole);
+            return res.status(200).json({ message: "Login successful", token,fname});
         } catch (error) {
             if (error.message == "Store not approved"){
                 return res.status(403).json({ error: error.message });

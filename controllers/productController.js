@@ -59,6 +59,31 @@ const productController = {
         }
 
     },
+    getRelatedProducts: async (req, res) => {
+        try {
+            const productID = req.params.productID;
+            const relatedProducts = await productServices.getRelatedProducts(productID);
+
+            return res.status(200).json(relatedProducts);
+        } 
+        catch (error) {
+            return res.status(500).json({ message: error.message });
+        }
+    },
+    searchProducts: async (req, res) => {
+        try {
+            const { q } = req.query;
+    
+            if (!q || q.trim() === '') {
+                return res.status(400).json({ error: 'Missing search query' });
+            }
+    
+            const result = await productServices.searchProducts(q.trim());
+            res.status(200).json(result);
+        } catch (error) {
+            res.status(500).json({ error: error.message || 'Server Error' });
+        }
+    },
     getAllProcucts:async(req,res) => {
         try {
             const storeID = req.query.storeID || null;

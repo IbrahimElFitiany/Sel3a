@@ -55,10 +55,13 @@ authService = {
     
                 const token = generateToken({
                     userID: user.id,
+                    name: user.fname,
                     role
                 });
+                
+                fname = user.fname;
     
-                return {token};
+                return {token , fname};
             } catch (error) {
                 throw new Error(error);
             }

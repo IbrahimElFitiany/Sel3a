@@ -1,6 +1,5 @@
 const { Op } = require("sequelize");
-const Fuse = require('fuse.js');
-const {Customer,CustomerAddress,Category,Product,SubCategory,WishList} = require('../models/index');
+const {Customer,CustomerAddress,Category,Product,SubCategory,WishList ,Brand} = require('../models/index');
 
 
 customerServices = {
@@ -47,20 +46,6 @@ customerServices = {
             throw new Error("Error while deleting customer address: " + error.message);
         }
     },
-    searchProducts: async (query) => {
-        const products = await Product.findAll();  // Sequelize .findAll() or Mongoose .find() — depending on what you're using.
-    
-        const options = {
-          keys: ['name', 'description', 'brand.name'],
-          threshold: 0.5, 
-        };
-    
-        const fuse = new Fuse(products, options);
-    
-        const result = fuse.search(query);
-    
-        return result.map(r => r.item);
-      },
     getCategoryService: async (categoryName) => {
         try {
 
