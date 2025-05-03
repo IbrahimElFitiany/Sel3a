@@ -47,6 +47,15 @@ Store.hasMany(Product, { foreignKey: 'storeid' });
 Product.belongsTo(Store, { foreignKey: 'storeid' });
 
 
+Order.hasMany(OrderItem, {
+    foreignKey: 'orderid',
+  });
+  
+OrderItem.belongsTo(Order, {
+foreignKey: 'orderid', 
+});
+
+
 const allModels = {
     Customer,
     CustomerAddress,

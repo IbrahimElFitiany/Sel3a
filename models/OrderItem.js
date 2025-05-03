@@ -9,7 +9,7 @@ const OrderItemModel = (sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      orderID: {
+      orderid: {
         type: DataTypes.INTEGER,
         references: {
           model: "orders",
@@ -17,7 +17,7 @@ const OrderItemModel = (sequelize) => {
         },
         onDelete: "CASCADE",
       },
-      productID: {
+      productid: {
         type: DataTypes.INTEGER,
         references: {
           model: "product",
@@ -38,6 +38,15 @@ const OrderItemModel = (sequelize) => {
         validate: {
           min: 0,
         },
+      },
+      branchid: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          model: "store_address",
+          key: "id",
+        },
+        onDelete: "SET NULL",
       },
     },
     {

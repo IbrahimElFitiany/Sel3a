@@ -116,19 +116,20 @@ CREATE TABLE cart (
     addedDate DATE DEFAULT CURRENT_DATE
 );
 
-drop TABLE cart
+DROP TABLE order_item CASCADE;
+
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     userID INTEGER REFERENCES Customer(id) ON DELETE CASCADE,
     orderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     totalAmount DECIMAL NOT NULL,
-    status VARCHAR(20) CHECK (status IN ('pending', 'shipped', 'delivered', 'canceled')) DEFAULT 'pending'
+    status VARCHAR(20) CHECK (status IN ('pending', 'shipped', 'delivered', 'canceled' , 'pick-up')) DEFAULT 'pending'
 );
 
 CREATE TABLE order_item (
     id SERIAL PRIMARY KEY,
-    orderID INTEGER REFERENCES orders(id) ON DELETE CASCADE,
-    productID INTEGER REFERENCES product(id) ON DELETE CASCADE,
+    orderID INTEGER REFERENCES orders(id) ON DELETE CASCADE NOT NULL,
+    productID INTEGER REFERENCES product(id) ON DELETE CASCADE NOT NULL,
     quantity INTEGER CHECK (quantity > 0) NOT NULL,
     price DECIMAL CHECK (price >= 0) NOT NULL
 );

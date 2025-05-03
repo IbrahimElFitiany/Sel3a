@@ -11,7 +11,7 @@ productServices = {
             if (store.role !== "store" ) {
                 throw new Error("You are not authorized to add a product");
             }
-            storeID = store.userID
+            const storeID = store.userID
 
             const productExists  = await Product.findOne({ where: { name, storeID } });
 
@@ -26,9 +26,11 @@ productServices = {
             throw error;
         }
     },
+    addProductsExcel: async (products,store) => {
+    },
     deleteProduct: async (productID,store) => {
         try {
-            if (store.role !== "seller") {
+            if (store.role !== "store") {
                 throw new Error("You are not authorized to delete a product");
             }
             const storeID = store.userID;
@@ -64,7 +66,7 @@ productServices = {
               include: [
                 {
                   model: StoreAddress,
-                  attributes: ['address'],
+                  attributes: ["id",'address'],
                   include: [
                     {
                       model: Gov,
@@ -98,13 +100,14 @@ productServices = {
           brand_id: rawProduct.brand_id,
           BrandName: rawProduct.Brand?.name || null,
           rating: rawProduct.rating,
-          BranchStocks: rawProduct.BranchStocks.map(stock => ({
+          BranchStocks: rawProduct.BranchStocks.map(branch => ({
             StoreAddress: {
-              address: stock.StoreAddress?.address || null,
-              Gov: stock.StoreAddress?.Gov?.name || null,
-              District: stock.StoreAddress?.District?.name || null
+              branchId:branch.StoreAddress.id ,
+              address: branch.StoreAddress?.address || null,
+              Gov: branch.StoreAddress?.Gov?.name || null,
+              District: branch.StoreAddress?.District?.name || null
             },
-            branchStockQty: stock.quantity,
+            branchStockQty: branch.quantity,
 
           }))
         };
@@ -154,7 +157,8 @@ productServices = {
                   },
                   {
                       model: Brand,
-                      attributes: ['name']
+                      attributes: ['name'],
+                      required: false
                   }
               ],
               limit: 7

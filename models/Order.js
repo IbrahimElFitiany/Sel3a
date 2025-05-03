@@ -9,7 +9,7 @@ const OrderModel = (sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      userID: {
+      userid: {
         type: DataTypes.INTEGER,
         references: {
           model: "Customer",
@@ -17,11 +17,11 @@ const OrderModel = (sequelize) => {
         },
         onDelete: "CASCADE",
       },
-      orderDate: {
+      orderdate: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },
-      totalAmount: {
+      totalamount: {
         type: DataTypes.DECIMAL,
         allowNull: false,
       },
@@ -30,7 +30,7 @@ const OrderModel = (sequelize) => {
         allowNull: false,
         defaultValue: "pending",
         validate: {
-          isIn: [["pending", "shipped", "delivered", "canceled"]],
+          isIn: [["pending", "shipped", "delivered", "canceled" , "pick-up"]],
         },
       },
     },

@@ -20,6 +20,7 @@ app.use("/api/store/",storeRoutes)
 app.use("/api/customer/",customerRoutes)
 app.use("/api/product/",productRoutes)
 app.use("/api/cart/",cartRoutes)
+app.use("/api/order/",orderRoutes)
 
 
 
