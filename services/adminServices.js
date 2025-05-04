@@ -13,6 +13,14 @@ adminServices = {
             throw error;
         }
     },
+    getAllGovs: async (user) => {
+        if (user.role !== "admin") {
+            throw new Error("Unauthorized access");
+        }
+    
+        const govs = await Gov.findAll(); // Assuming Gov is your model
+        return govs;
+    },
     removeGovService: async (govID) => {
         try {
             const gov = await Gov.findOne({ where: {id: govID} });

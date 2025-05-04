@@ -17,6 +17,7 @@
     "fuse.js": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.3",
+    "sel3a": "file:",
     "sequelize": "^6.37.6"
   }
 }

@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const {Customer,CustomerAddress,Category,Product,SubCategory,WishList ,Brand} = require('../models/index');
+const {Customer,CustomerAddress,Category,Product,SubCategory,WishList ,Brand,District} = require('../models/index');
 
 
 customerServices = {
@@ -20,6 +20,14 @@ customerServices = {
 
             if (addressExists){
                 return null
+            }
+
+            const districtExists = await District.findOne({
+             where: { id: districtid, govid: govid }
+            });
+
+            if (!districtExists) {
+                return { error: "The district does not belong to the specified governorate." };
             }
 
             const newAddress = await CustomerAddress.create({customerid,addresslabel,address,govid,districtid})

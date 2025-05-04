@@ -19,6 +19,7 @@ router
 
 router
 .route('/gov')
+.get(verifyToken, adminController.getAllGovs)
 .post(verifyToken,adminController.addGov)
 .delete(verifyToken,adminController.removeGov);
 

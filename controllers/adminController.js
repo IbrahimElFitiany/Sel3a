@@ -24,6 +24,22 @@ const adminController = {
             return res.status(500).json({ message: error.message });
         }
     },
+    getAllGovs: async (req, res)=>{
+         try {  
+            const user = req.user
+            const Govs = await adminServices.getAllGovs(user);
+ 
+            if(Govs){
+                return res.status(201).json({Govs});
+            }
+ 
+            return res.status(409).json({ error: "Government already exists" });
+ 
+         } 
+         catch (error) {
+            return res.status(500).json({ message: error.message });
+         }
+    },
     removeGov:  async (req, res) => {
 
         if (req.user.role !== "admin") {

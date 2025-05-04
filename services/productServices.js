@@ -235,26 +235,30 @@ productServices = {
     getAllProducts: async (user, optionalStoreID = null) => {
         const whereCondition = {};
       
-        if (user.role === 'store') {
+        if (user?.role === 'store') {
           whereCondition.storeID = user.userID;
         } 
-        else if (user.role === 'admin') {
+        else if (user?.role === 'admin') {
           if (optionalStoreID) {
             whereCondition.storeID = optionalStoreID;
           }
-        } else {
-          throw new Error('Unauthorized role');
+          else throw new Error("problem in service layer, specify el id")
+        } 
+        else {
+          if (optionalStoreID) {
+            whereCondition.storeID = optionalStoreID;
+          }
+          else throw new Error("problem in service layer , specify el id")
         }
       
         return await Product.findAll({ where: whereCondition,
             include: [
                 {
                   model: BranchStock,
-                  as: 'branchStocks',
+                
                   include: [
                     {
                       model: StoreAddress,
-                      as: 'branch',
                       attributes: ['address', 'govid', 'districtid']
                     }
                   ],
@@ -262,7 +266,7 @@ productServices = {
                 }
               ]
          });
-      },
+    },
     addBranchStock: async (branchID, productId, quantity, store) => {
         try {
             if (store.role !== "store") {
