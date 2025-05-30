@@ -13,6 +13,13 @@ branch-specific stock tracking, and secure role-based access — delivering a fl
 > Since then, I’ve significantly improved my software engineering abilities, system design, and performance optimization.  
 > Please consider this repository a **work in progress** or **a historical reference** only.
 
+### 🖼️ Sel3a Screenshots – Interface Preview
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/265b23d9-6c26-4534-8393-3c00d8eba7b1" width="33%" />
+  <img src="https://github.com/user-attachments/assets/00ee65c2-158f-4028-a90a-937cdd764d53" width="33%" />
+  <img src="https://github.com/user-attachments/assets/e77441d4-6cca-43f7-a6b0-bf854e405da5" width="33%" />
+</p>
+
 ## 👥 Core Functionalities by User Type
 
 ### 🔐 Administrator
